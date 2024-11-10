@@ -320,6 +320,7 @@ int main(int argc, char* args[]) {
 
 ```
 **Uso del semáforo**
+
 El uso del semaforo se podría usar en este código para sincronizar la detección de un evento con el inicio de la reproducción del audio en el hilo, el evento en este caso es presionar la tecla P. esta implementación nos ayuda a evitar que el audio se reproduzca sin motivo. 
 
 **Implementación del semáforo en el código**
