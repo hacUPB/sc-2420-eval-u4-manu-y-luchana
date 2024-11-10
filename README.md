@@ -71,7 +71,7 @@ int main(int argc, char* argv[]) {
 }
 
 ``` 
-![alt text](image.png)
+![image](https://github.com/user-attachments/assets/56581e31-ce51-4f11-a0ef-dd49ad20e9b5)
 
 
 - ¿Cuál es el equivalente de `join` en la API de SDL2? Busca e implementa un ejemplo.
@@ -131,8 +131,7 @@ int main() {
 
 ```
 Las 2 primeras veces que lo ejecutamos dio 20 como es esperado, por lo cual repetimos la ejecucion y notamos que el unico cambio era entre 20 y 10, por lo que concluimos que lograba leer el valor de ambos en totalidad o uno entero y parte del otro.
-![alt text](image-5.png)
-
+![image](https://github.com/user-attachments/assets/b12b961f-1418-40fb-86aa-ecfa975d137c)
 
 Aqui agregamos el semaforo, primero lo declaramos, luego en la funcion de aumentar pusimos que espere a que este disponible, sume el contador y luego lo libera.
 Cuando en el main creo el semaforo le doy un valor inicial de 1, permitiendo que solo acceda un hilo
@@ -175,8 +174,9 @@ Aqui siempre que lo ejecute me dio un valor de 20
 
 - Busca e implementa un ejemplo que use un semáforo para sincronizar dos hilos.
 Le pedimos a chat gpt un ejercicio y me propuso uno donde primero marca que el hilo dos hace una tarea, luego que el hilo 1 lo esta esperando y luego cuando acaba esa tarea y libera el semaforo para que el hilo uno ejecute.
+![image](https://github.com/user-attachments/assets/ffaeb167-d022-4b12-94ed-c9c1606ee0d7)
 
-![alt text](image-3.png)
+
 
 Luego con esto de base hicimos un ejemplo con dos hilos donde el primero diga hola soy el hilo 1 y el segundo Hola, soy el hilo 2. El hilo 1 tiene que esperar a que el hilo dos finalice su trabajo, para esto añadimos un delay para confirmar que espere.
 ```C
@@ -762,7 +762,8 @@ Con ayuda de la IA y cierta investigación, decimos que el semáforo ayuda a res
 En este ejercicio se nos propone una manera de compartir recursos con variables globales evitando que ocurra la condicion de carrera haciendo que los hilos concurran a este recurso en distintos momentos. En el codigo proporcionado la variable compartida es shared y se inicializa en 0, los hilos tienen una funcion que suma el contador shared en 1, luego en el main se crean los hilos 1 y 2, usando la nomenclatura de primero los identificadores del hilo, luego el atributo NULL, luego &funcition que asigna la funcion que se ejecuta en el hilo y luego null nuevamente que nos dice que no hay argumentos para function. Luego usamos pthread_join que espera que el hilo inidcado termine antes de que el programa continue su ejecucion, luego imprime el valor de shared. Aqui tenemos un manejo de errores con 1,2,3 y 4, si cada funcion falla devuelve un valor distinto a 0 (!=0). 
 
 Probamos el codigo y efectivamente da 2 sin importar las veces que lo ejecutemos, probando que esta verificacion de alternacion de hilos asegura que no va a haber condicion de carrera.
-![alt text](image-4.png)
+![image](https://github.com/user-attachments/assets/f672bcd2-9114-4e5c-8ae8-5f30531860c2)
+
 
 ## Ejercicio 10: 
 Cuando se agrega un bucle con un número de iteraciones, ambos hilos ejecutan el **shared++** muchas veces.Los dos hilos incrementan la misma variable global shared de seguido, esto puede generar que interfieran entre sí y producir un resultado incorrecto, ya que podrían estar aumentando **shared** al mismo tiempo. Por ejemplo, si cada hilo realiza 1000 incrementos en **shared**,  el  valor que se espera es 2000. Pero cuando los hilos están "compitiendo", el valor puede ser menor ya que algunas operaciones de incremento se pierdden cuando los hilos acceden a **shared++** al mismo tiempo.
@@ -774,5 +775,6 @@ Esto es una tecnica alternativa para evita la condicion de carrera, el **mutex**
 
 En el programa proporcionado volvemos a usar el ejemplo del contador que aumenta x cantida de iteraciones, en este caso igual que el anterior se nos plantea un numero de iteraciones igual a 100, luego se declara shared en 0 y la mutual exclusion que es pthread_mutex_t mxShared; que mas tarde se inicializa en main antes de que creemos los hilos, mutex se usa para controlar el acceso a shared, en function esta el bucle de incrementar shared segun el numero de iteraciones, para cada incremento el hilo bloquea el mutex con pthread_mutex_lock(mxShared), asi accede a shared y desbloquea el mutex con pthread_mutex_unloch(&mxShared), esta funcion nos asegura que no va a ocurrir la condicion de carrera porque sin importar que, un solo hilo puede alterar a shared en cada iteracion, al final destrimos en mutex. En si la estructura del codigo se mantiene con la diferencia de el uso de los mutex.
 El resultado esperado seria 200, vamos a poner el codigo a prueba, ejecutamos varias veces para verificar que no hubiera condicion de carrea y alteramos el numero de iteraciones a 1000 para verificar que si cumpliera el valor definido ahi.
-![alt text](image-6.png)
+![image](https://github.com/user-attachments/assets/6985daa0-25b9-48af-ae40-981bc65b23b3)
+
 
