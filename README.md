@@ -580,3 +580,8 @@ Con ayuda de la IA y cierta investigación, decimos que el semáforo ayuda a res
 
 - El hilo principal aumenta el valor del semáforo cuando se detecta el evento (presionar la tecla), dando la señal de que el hilo del audio puede iniciar la reproducción.
 - Cuando el semáforo le indica, el hilo del audio procede a reproducir el audio  y espera a que vuelvan a presionar la tecla. 
+
+## Ejercicio 10: 
+Cuando se agrega un bucle con un número de iteraciones, ambos hilos ejecutan el **shared++** muchas veces.Los dos hilos incrementan la misma variable global shared de seguido, esto puede generar que interfieran entre sí y producir un resultado incorrecto, ya que podrían estar aumentando **shared** al mismo tiempo. Por ejemplo, si cada hilo realiza 1000 incrementos en **shared**,  el  valor que se espera es 2000. Pero cuando los hilos están "compitiendo", el valor puede ser menor ya que algunas operaciones de incremento se pierdden cuando los hilos acceden a **shared++** al mismo tiempo.
+
+Para evitar este comportamiento recomiendan usar mecanismo de sincronización como un **mutex**, el cual asegura que solo un hilo a la vez pueda acceder a shared, evitando que los dos hilos "compitan". 
