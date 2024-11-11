@@ -133,6 +133,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Audio.c" />
     <ClCompile Include="Bola.c" />
     <ClCompile Include="Entity.c" />
     <ClCompile Include="Ladrillo.c" />
@@ -141,6 +142,7 @@
     <ClCompile Include="powerup.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Audio.h" />
     <ClInclude Include="Bola.h" />
     <ClInclude Include="constantes.h" />
     <ClInclude Include="Entity.h" />

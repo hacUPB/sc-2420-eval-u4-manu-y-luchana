@@ -17,5 +17,5 @@ Ladrillo ladrillos[5][10];
 Ladrillo* crear_ladrillo(int x, int y, int height, int width);  
 void destruir_ladrillo(Ladrillo* this);
 void render_ladrillo(Ladrillo* ladrillo, SDL_Renderer* renderer);
-void check_bola_brick_collision(struct Bola* bola, struct Ladrillo* ladrillos[5][10]);
+extern bool check_bola_brick_collision(struct Bola* bola, struct Ladrillo* ladrillos[5][10]);
 #endif
