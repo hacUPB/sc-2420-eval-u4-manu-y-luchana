@@ -1,6 +1,8 @@
 # JUEGO FINAL: BRICK BREAKER 
 Para el desarrollo de esta nueva parte del proyecto y luego de haber realizado toda la parte de la investigación de la unidad 4, logramos añadir a nuestro juego BRICK BREAKER (originalmente de luciana) dos sonidos que funcionan por medio de un solo hilo. Conservamos el sonido "tap.wav" del ejercicio #8 y buscamos uno nuevo llamado "destruir.wav" que simula el sonido de un ladrillo partiendose. 
 
+**Todo el código del proyecto  está completo en las carpetas de este repositorio**
+
 ## Parte 1: crear los archivos .c y .h 
 Para continuar con lo visto la unidad anterior y con la idea de seguir aplicando POO a nuestro juego, creamos dos archivos más: audio.c y audio.h . 
 
