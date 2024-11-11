@@ -19,7 +19,7 @@ int score = 0;
 bool activar_lluvia_powerup = false;
 
 // Función para verificar la colisión entre la bola y los ladrillos
-void check_bola_brick_collision(Bola* bola, Ladrillo* ladrillos[5][10], Audio* audio) {
+void check_bola_brick_collision(Bola* bola, Ladrillo* ladrillos[5][10], Audio* destruirAudio) {
     for (int i = 0; i < 5; i++) {
         for (int j = 0; j < 10; j++) {
             Ladrillo* ladrillo = ladrillos[i][j]; // Cambia a puntero directo
@@ -38,7 +38,7 @@ void check_bola_brick_collision(Bola* bola, Ladrillo* ladrillos[5][10], Audio* a
                         activar_lluvia_powerup = true;
                     }
                     printf("Puntaje: %d\n", score); // Mostrar el puntaje
-                    Audio_startPlayback(audio);
+                    Audio_startPlayback(destruirAudio);
 
                 }
             }

@@ -31,13 +31,13 @@ void update_bola(Bola* bola, bool* game_is_running) {
 		*game_is_running = false; // Termina el juego si la bola cae
 	}
 }
-void verificar_colision_bola_paleta(Bola* bola, Paleta* paleta, Audio* audio) {
+void verificar_colision_bola_paleta(Bola* bola, Paleta* paleta, Audio* tapAudio) {
 	if (bola->base.x + bola->base.width >= paleta->base.x &&
 		bola->base.x <= paleta->base.x + paleta->base.width &&
 		bola->base.y + bola->base.height >= paleta->base.y &&
 		bola->base.y <= paleta->base.y + paleta->base.height) {
 		bola->dy *= -1; // Invertir dirección
-		Audio_startPlayback(audio);
+		Audio_startPlayback(tapAudio);
 
 		// printf("Colisión con la paleta\n");//debug
 	}

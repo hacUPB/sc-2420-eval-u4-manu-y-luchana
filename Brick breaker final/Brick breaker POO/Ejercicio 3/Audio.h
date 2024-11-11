@@ -1,4 +1,3 @@
-// audio.h
 #ifndef AUDIO_H
 #define AUDIO_H
 
@@ -12,11 +11,15 @@ typedef struct {
     SDL_AudioDeviceID audioDevice;
     SDL_AudioSpec audioSpec;
     SDL_sem* audioSemaphore;   // Puntero del Semáforo global para sincronizar el evento de audio
+    const char* fileName;    // Nombre del archivo de audio
 } Audio;
 
-void Audio_init(Audio* audio);
+// Constantes para los archivos de audio
+extern const char* TAP_AUDIO_FILE;
+extern const char* DESTRUIR_AUDIO_FILE;
+
+void Audio_init(Audio* audio, const char* fileName);
 void Audio_destroy(Audio* audio);
 void Audio_startPlayback(Audio* audio);
 
 #endif // AUDIO_H
-

@@ -1,22 +1,26 @@
-
 #include "audio.h"
 #include <stdio.h>
 #include <stdbool.h>
+
+const char* TAP_AUDIO_FILE = "tap.wav";
+const char* DESTRUIR_AUDIO_FILE = "destruir.wav";
 
 void AudioCallback(void* userdata, Uint8* stream, int len);
 
 int audio_thread(void* arg) {
     Audio* audio = (Audio*)arg;
+    const char* audioFilePath = audio->fileName;  // Ruta del archivo de audio
+
     while (true) {
-        // Espera a que el semáforo sea incrementado por el hilo principal
-        SDL_SemWait(audio->audioSemaphore);
+        SDL_SemWait(audio->audioSemaphore);  // Espera hasta que se active el semáforo
 
         // Reinicia la posición del audio y la bandera de terminado
         audio->audioPosition = 0;
         audio->audioFinished = SDL_FALSE;
 
         // Carga el archivo de audio
-        if (SDL_LoadWAV("tap.wav", &audio->audioSpec, &audio->audioData, &audio->audioLength) == NULL) {
+        
+        if (SDL_LoadWAV(audioFilePath, &audio->audioSpec, &audio->audioData, &audio->audioLength) == NULL) {
             printf("Unable to load WAV file: %s\n", SDL_GetError());
             continue;
         }
@@ -30,6 +34,9 @@ int audio_thread(void* arg) {
             SDL_Delay(10); // Pequeña espera para no sobrecargar el CPU
         }
 
+        // Detener el dispositivo de audio
+        SDL_PauseAudioDevice(audio->audioDevice, 1);
+
         // Libera el archivo de audio después de la reproducción
         SDL_FreeWAV(audio->audioData);
         printf("Audio finished\n");
@@ -37,12 +44,12 @@ int audio_thread(void* arg) {
     return 0;
 }
 
+
 void AudioCallback(void* userdata, Uint8* stream, int len) {
     Audio* audio = (Audio*)userdata;
 
     if (audio->audioPosition >= audio->audioLength) {
-        audio->audioFinished = SDL_TRUE;
-        printf("AudioCallback: Audio finished flag set\n");
+        audio->audioFinished = SDL_TRUE;  // Marca como terminado cuando se alcanza el final
         return;
     }
 
@@ -53,7 +60,11 @@ void AudioCallback(void* userdata, Uint8* stream, int len) {
     audio->audioPosition += bytesToCopy;
 }
 
-void Audio_init(Audio* audio) {
+
+void Audio_init(Audio* audio, const char* fileName) {
+    audio->fileName = fileName;  // Asignar el archivo de sonido correspondiente
+
+    // Configuración del formato de audio
     audio->audioSpec.freq = 44100;
     audio->audioSpec.format = AUDIO_S16SYS;
     audio->audioSpec.channels = 1;
@@ -61,9 +72,11 @@ void Audio_init(Audio* audio) {
     audio->audioSpec.callback = AudioCallback;
     audio->audioSpec.userdata = audio;
 
+    // Abre el dispositivo de audio
     audio->audioDevice = SDL_OpenAudioDevice(NULL, 0, &audio->audioSpec, NULL, 0);
     if (audio->audioDevice == 0) {
         fprintf(stderr, "Unable to open audio device: %s\n", SDL_GetError());
+        return false;
     }
 
     // Inicializa el semáforo para el hilo de audio

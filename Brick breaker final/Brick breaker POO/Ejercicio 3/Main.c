@@ -10,14 +10,20 @@
 
 
 
+Audio tapAudio;
+Audio destruirAudio;
+
 // Función principal del juego
-int main(Audio *audio) {
+int main() {
     // Inicialización de SDL
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
     SDL_Window* window = SDL_CreateWindow("Brick Breaker", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    
+    Audio_init(&tapAudio, "tap.wav");
+    Audio_init(&destruirAudio, "destruir.wav");
 
-    Audio_init(&audio);
+    
     // Crear la bola, la paleta y los ladrillos
     Bola* bola = crear_bola(400, 300, 20, 20, 3, -3);
     Paleta* paleta = crear_paleta(350, 500, 20, 100, 15);
@@ -47,8 +53,8 @@ int main(Audio *audio) {
 
         // Actualizar la bola (añade la colisión con la paleta)
         update_bola(bola, &game_is_running, paleta);
-        verificar_colision_bola_paleta(bola, paleta, &audio); // Pasa el audio a la función de colisión
-        check_bola_brick_collision(bola, ladrillos, &audio);  // Pasa el audio a la función de colisión de ladrillos
+        verificar_colision_bola_paleta(bola, paleta, &tapAudio); // Pasa el audio a la función de colisión
+        check_bola_brick_collision(bola, ladrillos, &destruirAudio);  // Pasa el audio a la función de colisión de ladrillos
         actualizar_lluvia_powerup(&bola, &score);
 
         // Limpiar pantalla
@@ -79,7 +85,8 @@ int main(Audio *audio) {
     }
 
     // Limpiar recursos
-    Audio_destroy(&audio); // Libera los recursos de audio
+    Audio_destroy(&tapAudio); // Libera los recursos de audio
+    Audio_destroy(&destruirAudio); // Libera los recursos de audio
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
