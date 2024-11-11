@@ -218,4 +218,5 @@ void check_bola_brick_collision(Bola* bola, Ladrillo* ladrillos[5][10], Audio* d
 }
 ```
 Gracias al uso de los debugs podemos mirar desde la consola el comportamiento de los archivos de audio y luego de correr el código exitosamente la consola se ve así: 
+![brick](https://github.com/user-attachments/assets/d243e4bf-cbd2-40f4-bb89-a953d7914168)
 
