@@ -777,4 +777,16 @@ En el programa proporcionado volvemos a usar el ejemplo del contador que aumenta
 El resultado esperado seria 200, vamos a poner el codigo a prueba, ejecutamos varias veces para verificar que no hubiera condicion de carrea y alteramos el numero de iteraciones a 1000 para verificar que si cumpliera el valor definido ahi.
 ![image](https://github.com/user-attachments/assets/6985daa0-25b9-48af-ae40-981bc65b23b3)
 
+## Ejercicio 12
 
+El código de este ejemplo utiliza semáforos para controlar el acceso de varios hilos a una parte del código que imprime un mensaje. Esto demuestra como esta implementación del semáforo previene las condiciones de carrera de una manera diferente a los mutex. 
+
+Como se mencionó en el enunciado del ejemplo, el mutex y los semáforos tienen marcadas diferencias, entre estas está el objetivo de cada uno: 
+
+El objetivo del **mutex** es que es una cerradura usada cuando solo un hilo debe acceder a una parte del código a la vez, este permite exclusión mutua, es decir, 1 o 0: bloqueado o desbloqueado. 
+
+Un semáforo por su lado permite controlar múltiples accesos al mismo tiempo, es muy útil cuando se necesita que más de un hilo acceda a un recurso. El semáforo tiene un contador y el número inicial indica la cantidad de accesos prmitidos. 
+
+Para el funcionamiento es de la siguiente manera: 
+
+Cuando un hilo tiene el **mutex** bloqueaado, los demás esperan a que se desbloquee. El **semáforo** por su lado utiliza **sem_wait** para disminuir el contador y **sem_post** para aumentarlo. Esto permite más flexibilidad, pues puede controlar un número de accesos superior a uno. 
